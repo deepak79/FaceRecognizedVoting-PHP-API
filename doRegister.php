@@ -26,17 +26,6 @@ class User
             }
             return $randomString;
         }
-        function sendSMS($message,$mobileno)
-        {
-            $cSession = curl_init();
-            $url = 'http://49.50.67.32/smsapi/httpapi.jsp?username=usrhttp03&password=usrhttp03&from=USRCRT&to='.$mobileno.'&text='.$message.'&coding=0';
-            $link = str_replace ( ' ', '%20', $url);
-            curl_setopt($cSession,CURLOPT_URL,$link);
-            curl_setopt($cSession,CURLOPT_RETURNTRANSFER,true);
-            curl_setopt($cSession,CURLOPT_HEADER, false);
-            $result=curl_exec($cSession);
-            curl_close($cSession);
-        }
         $query_count = "SELECT email FROM userDetails WHERE email='$email' ";
         $insert = mysqli_query($this->connection,$query_count);
         $num_rows = mysqli_num_rows($insert);
@@ -67,7 +56,6 @@ class User
                     $json['pass'] = "You have successfully registered, Please verify your account and get token number to get logged in to system!";
 
                     $message = "Your token number is ".$token;
-                    sendSMS($message,$phoneNumber);               
                 }
                 else
                 {
